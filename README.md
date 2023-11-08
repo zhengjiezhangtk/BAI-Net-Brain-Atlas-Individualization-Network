@@ -1,4 +1,4 @@
-# Individual Cortex Parcellation with Brainnetome Atlas Priors
+# BAI-Net: Individualized Anatomical Cerebral Cartography using Graph Neural Network
 
 by: Ma Liang at 2020/4/30
 
@@ -204,3 +204,15 @@ As mentioned above, we provide the flexible of data structure, so some data path
 --card1: First Cuda Card Number
 --card2: Second Cuda Card Number, whcih also can be absent with 'None'
 ```
+
+## pubilication
+@ARTICLE{9933490,
+  author={Ma, Liang and Zhang, Yu and Zhang, Hantian and Cheng, Luqi and Yang, Zhengyi and Lu, Yuheng and Shi, Weiyang and Li, Wen and Zhuo, Junjie and Wang, Jiaojian and Fan, Lingzhong and Jiang, Tianzi},
+  journal={IEEE Transactions on Neural Networks and Learning Systems}, 
+  title={BAI-Net: Individualized Anatomical Cerebral Cartography Using Graph Neural Network}, 
+  year={2022},
+  volume={},
+  number={},
+  pages={1-12},
+  doi={10.1109/TNNLS.2022.3213581}}
+
