@@ -1,0 +1,2 @@
+model_checkpoint_path: "/n04dat01/atlas_group/lma/populationGCN/BAI_Net/BAI_Net_Yeo17Network/tf_Yeo17Network_0_5_Ltf_0_5_L.ckpt"
+all_model_checkpoint_paths: "/n04dat01/atlas_group/lma/populationGCN/BAI_Net/BAI_Net_Yeo17Network/tf_Yeo17Network_0_5_Ltf_0_5_L.ckpt"
