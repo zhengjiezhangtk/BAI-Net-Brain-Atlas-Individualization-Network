@@ -206,13 +206,5 @@ As mentioned above, we provide the flexible of data structure, so some data path
 ```
 
 ## pubilication
-@ARTICLE{9933490,
-  author={Ma, Liang and Zhang, Yu and Zhang, Hantian and Cheng, Luqi and Yang, Zhengyi and Lu, Yuheng and Shi, Weiyang and Li, Wen and Zhuo, Junjie and Wang, Jiaojian and Fan, Lingzhong and Jiang, Tianzi},
-  journal={IEEE Transactions on Neural Networks and Learning Systems}, 
-  title={BAI-Net: Individualized Anatomical Cerebral Cartography Using Graph Neural Network}, 
-  year={2022},
-  volume={},
-  number={},
-  pages={1-12},
-  doi={10.1109/TNNLS.2022.3213581}}
+L. Ma et al., "BAI-Net: Individualized Anatomical Cerebral Cartography Using Graph Neural Network," in IEEE Transactions on Neural Networks and Learning Systems, doi: 10.1109/TNNLS.2022.3213581.
 
