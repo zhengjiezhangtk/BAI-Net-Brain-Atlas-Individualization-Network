@@ -19,8 +19,8 @@ The parcellation result shows high reproducibility within the same subjects, hig
 ## Requirement
 ```
 the pipline dependency: 
-    Python----> tensorflow-gpu >= 1.12 (tensorflow 2.0 has not been tested， tensorflow 1.15 might need revised code)
-        ----> TractSeg >=2.1
+    Python----> tensorflow-gpu >= 1.12 or pytorch >=2.0
+          ----> TractSeg >=2.1
     FSL 5.0 (some methods in 6.0 is not compatible )
     FreeSurfer >= 5.3
     workbench 
