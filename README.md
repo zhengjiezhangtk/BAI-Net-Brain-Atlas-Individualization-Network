@@ -9,11 +9,11 @@ $F = Norm(T ×F )$
 
 $T ∈R^{N_v×N_b}$ is the tractography matrix for a subject, indicating the connection densities between cortical vertices and brain areas. $N_v$ represents the number of vertices in the cortical surface of the $S$ subject and $N_bs$ the number of brain voxels of the $S$ subject. The number of brain voxels $N_b$ is different across subjects. $F∈R^{N_b×N_F}$ represents fiber-tract masks with value of 1 or 0 indicating the existence of each fiber tract. In this study, fiber tract masks are extracted individually using [TractSeg](https://github.com/MIC-DKFZ/TractSeg), and the number of fiber tracts $N_F$ is 72. After the multiplication of two matrix, fiber-density fingerprint is obtained and then a normalization will be applied on this matrix to ensure the sum of fiber-density from a vertex is equal to 1.
 
-Then the BAI-Net method trains a Chebyshev graph neural network to achieve the robust detection of the anatomical reference of each function network on population and inference their cortical location individually. The structure of this network consists of two stacked Chebyshev graph convolutional layers with the input of individual tract-density fingerprint ($F$) and normalized graph Laplacian $(L ̃)$ calculated from adjacent matrix which is weighted by the inverse of the geometric distance between near six vertices. 
+Then the BAI-Net method trains a Chebyshev graph neural network to achieve the robust detection of the anatomical reference of each function network on population and inference their cortical location individually. The structure of this network consists of two stacked Chebyshev graph convolutional layers with the input of individual tract-density fingerprint ($F$) and normalized graph Laplacian $(L)$ calculated from adjacent matrix which is weighted by the inverse of the geometric distance between near six vertices. 
 The pipeline use the fiber connection fingerprint derived from group brainnetome atlas to parcellate the individual cerebral cortex. This pipline is trained on the 32kLR surface, could also be applied into other HCP-styled surface (.surf.gii). Currently, The BAI-Net support both tensorflow and pytorch packages to inference individual brain networks or parcellation. Suppoted brain network includes Yeo's 7 networks, 17 networks. Supported brain parcellation on surface includes: Brainnetome Atlas, HCP-parcellation.
 ![Fiber-density framework](figure1.png)
 
-
+The parcellation result shows high reproducibility within the same subjects, high inter-subject specifity, high robustness across multi-scanner image, and enable for local parcellation to reach high similarity with whole-brain parcellation.
 ![High reproducibility](figure2.png)
 
 ## Requirement
