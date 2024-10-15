@@ -4,7 +4,7 @@ by: Ma Liang at 2020/4/30
 
 ## Introduction
 The pipeline use the fiber connection fingerprint derived from group brainnetome atlas to parcellate the individual cerebral cortex. This pipline is working on the brain cortex surface not the itself image directly, the final result is also on surface. Later based on this pipline, a version of individual parcellation on image might be producted later.
-![Fiber-density framework](Figure1.tif)
+![Fiber-density framework](figure1.tif)
 
 ## Requirement
 ```
