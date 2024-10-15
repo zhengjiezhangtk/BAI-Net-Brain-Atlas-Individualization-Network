@@ -47,15 +47,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    patchfile = '/n15dat01/lma/data/MASiVar_prep/anat/patch_{}.txt'.format(args.subdir)
-    with open(patchfile,'r') as f:
-        for sessiondir in f.readlines():
-            sessiondir = sessiondir.strip()
-            sinput = sessiondir+'/anat/T1_1mm.nii.gz'
-            sub = sessiondir.split('/')[-2] + '-' + sessiondir.split('/')[-1] 
-
-            # if not os.path.exists(subdir):
-            #     os.mkdir(subdir)
-            # os.system('bash {}/bedpostx_gpu_6.0revised.sh {}'.format(dtifile)
             
             
