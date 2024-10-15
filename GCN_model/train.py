@@ -28,7 +28,7 @@ def train_step(dirname, modeldir, datasetpath, FLAGS):
     print(dirname, modeldir, datasetpath)
 
     # Load training data
-    namelist_path = '/n04dat01/atlas_group/lma/HCP_S1200_individual_atlas/analysis_script/List_HCP100.txt'
+    namelist_path = './List_HCP100.txt'
     namelist1 = [ name.strip() for name in open(namelist_path, 'r').readlines() ]
     namelist_path = '/n14dat01/lma/data/HCPwork/sub_list.txt'
     namelist2 = [ name.strip() for name in open(namelist_path, 'r').readlines() ]
@@ -43,12 +43,12 @@ def train_step(dirname, modeldir, datasetpath, FLAGS):
     adj, features, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data(FLAGS.hemisphere, subdirlist=subdir_path, modeldir=modeldir, MPM=False, uniform=True)
     
     # Load retest data
-    f = open('/n14dat01/lma/data/HCP_test/sub_list.txt', 'r')
+    f = open('./HCP_test/sub_list.txt', 'r')
     subdir_path = [ '{}/{}'.format('/n14dat01/lma/data/HCP_test', str(name).strip()) for name in f.readlines()][:42]
     adj2, features2, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data(FLAGS.hemisphere, subdirlist=subdir_path, modeldir=modeldir, MPM=False, uniform=True)
 
     # #Load Resesting data
-    f = open('/n14dat01/lma/data/HCP_test/sub_list.txt', 'r')
+    f = open('./HCP_retest/sub_list.txt', 'r')
     subdir_path = [ '{}/{}'.format('/n14dat01/lma/data/HCP_retest', str(name).strip()) for name in f.readlines()][:42]
     adj3, features3, y_train, y_val, y_test, train_mask, val_mask, test_mask = load_data(FLAGS.hemisphere, subdirlist=subdir_path, modeldir=modeldir, MPM=False, uniform=True)
     
@@ -226,39 +226,27 @@ if __name__ == '__main__':
 
     t_test = time.time()
 
-    scorelist = []
-    for depth in [ 0]:
-        print(depth)
-        for max_degree in [ 5]:
-            for hemi in ['L']:
-                model_result='/n04dat01/atlas_group/lma/populationGCN/BAI_Net/BAI-Net_MSM/tf_test_{}_{}_{}/'.format( depth, max_degree, hemi)
-                if not os.path.exists(model_result):
-                    os.mkdir(model_result)
-                del_all_flags(tf.flags.FLAGS)
-                FLAGS = flags.FLAGS
-                flags.DEFINE_string('dataset', '/n04dat01/atlas_group/lma/HCP_S1200_individual_MSM_atlas', 'Dataset string.')  # 'cora', 'citeseer', 'pubmed'
-                flags.DEFINE_string('modeldir', '/n04dat01/atlas_group/lma/populationGCN/BAI_Net/BAI-Net_MSM', 'Dataset string.')
-                flags.DEFINE_string('model', 'gcn_cheby', 'Model llstring.')  # 'gcn', 'gcn_cheby', 'dense'
-                flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
-                flags.DEFINE_float('basic_learning_rate', 0.01, 'basic learning rate.')
-                flags.DEFINE_integer('epochs', 50, 'Number of epochs to train.')
-                flags.DEFINE_integer('hidden1', 32, 'Number of units in hidden layer 1.')
-                flags.DEFINE_float('dropout', 0., 'Dropout rate (1 - keep probability).')
-                flags.DEFINE_integer('depth', depth, 'Dropout rate (1 - keep probability).')
-                flags.DEFINE_float('weight_decay', 5e-4, 'Weight for L2 loss on embedding matrix.')
-                flags.DEFINE_integer('early_stopping', 10, 'Tolerance for early stopping (# of epochs).')
-                flags.DEFINE_integer('max_degree', max_degree, 'Maximum Chebyshev polynomial degree.')
-                flags.DEFINE_integer('train_num', 100, 'sample size for training ')
-                flags.DEFINE_integer('validate_num', 20, 'sample size for training ')
-                flags.DEFINE_string('hemisphere', hemi, 'cerebral cortex part')
-                flags.DEFINE_string('mode', 'train', 'cerebral cortex part')
-                print('hemisphere: ', FLAGS.hemisphere)
-                print('_____layer_num:', FLAGS.depth, 'model:', FLAGS.model, 'max_degree:', FLAGS.max_degree, 'hidden:', FLAGS.hidden1)
+
+    del_all_flags(tf.flags.FLAGS)
+    FLAGS = flags.FLAGS
+    flags.DEFINE_string('dataset', './HCP_S1200_individual_MSM_atlas', 'Dataset string.')  # 'cora', 'citeseer', 'pubmed'
+    flags.DEFINE_string('modeldir', './BAI_Net/BAI_Net_BN', 'Dataset string.')
+    flags.DEFINE_string('model', 'gcn_cheby', 'Model llstring.')  # 'gcn', 'gcn_cheby', 'dense'
+    flags.DEFINE_float('learning_rate', 0.01, 'Initial learning rate.')
+    flags.DEFINE_float('basic_learning_rate', 0.01, 'basic learning rate.')
+    flags.DEFINE_integer('epochs', 50, 'Number of epochs to train.')
+    flags.DEFINE_integer('hidden1', 32, 'Number of units in hidden layer 1.')
+    flags.DEFINE_float('dropout', 0., 'Dropout rate (1 - keep probability).')
+    flags.DEFINE_integer('depth', depth, 'GNN depth')
+    flags.DEFINE_float('weight_decay', 5e-4, 'Weight for L2 loss on embedding matrix.')
+    flags.DEFINE_integer('early_stopping', 10, 'Tolerance for early stopping (# of epochs).')
+    flags.DEFINE_integer('max_degree', max_degree, 'Maximum Chebyshev polynomial degree.')
+    flags.DEFINE_integer('train_num', 100, 'sample size for training ')
+    flags.DEFINE_integer('validate_num', 20, 'sample size for validation ')
+    flags.DEFINE_string('hemisphere', hemi, 'cerebral cortex part')
+    flags.DEFINE_string('mode', 'train', 'model mode')
+    print('hemisphere: ', FLAGS.hemisphere)
+    print('_____layer_num:', FLAGS.depth, 'model:', FLAGS.model, 'max_degree:', FLAGS.max_degree, 'hidden:', FLAGS.hidden1)
     
-                mean_val_loss, mean_val_dice, mean_val_inter_dice, mean_tmp_dice = train_step(model_result, FLAGS.modeldir, FLAGS.dataset, FLAGS)
-                resutls = np.array([depth, max_degree, hemi, mean_val_loss, mean_val_dice, mean_val_inter_dice, mean_tmp_dice])
-                np.save('results_{}_{}_{}.npy'.format(depth, max_degree, hemi), resutls)
-                scorelist.append([depth, max_degree, hemi, mean_val_loss, mean_val_dice, mean_val_inter_dice, mean_tmp_dice])
-    
-    # info = pd.DataFrame(np.array(scorelist), columns=['depth', 'max_degree', 'hemi', 'mean_val_loss', 'mean_val_dice', 'val_inter_dice', 'reproducible'])
-    # info.to_csv('degree7_grid_search_info.csv')
+    mean_val_loss, mean_val_dice, mean_val_inter_dice, mean_tmp_dice = train_step(model_result, FLAGS.modeldir, FLAGS.dataset, FLAGS)
+    resutls = np.array([depth, max_degree, hemi, mean_val_loss, mean_val_dice, mean_val_inter_dice, mean_tmp_dice])
