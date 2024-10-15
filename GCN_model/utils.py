@@ -71,7 +71,7 @@ def load_data(hemisphere, subdirlist=None, MPM=True, modeldir=None, uniform=Fals
 
 def load_label_and_mask(hemisphere,  MPM=False):
     
-    label_arr = np.load('/n04dat01/atlas_group/lma/populationGCN/BAI_Net/Brainnetome/mesh_label_all_{}.npy'.format(hemisphere))
+    label_arr = np.load('./Brainnetome/mesh_label_all_{}.npy'.format(hemisphere))
     label_arr = small2small(label_arr, hemisphere)
     
     select_label = np.sort(list(set(label_arr)))
@@ -87,8 +87,8 @@ def load_label_and_mask(hemisphere,  MPM=False):
     test_mask = np.array([True]*len(index)).astype('int32')
 
     if MPM:
-        workdir = '/n04dat01/atlas_group/lma/populationGCN/BAI_Net'
-        train_mask = np.load('{}/Brainnetome/mpm_{}.npy'.format(str(workdir), hemisphere))
+
+        train_mask = np.load('./Brainnetome/mpm_{}.npy'.format( hemisphere))
         train_mask = train_mask/100
 
     print('Label shape:', label_arr.shape, 'Mask shape: ', train_mask.shape)
@@ -253,7 +253,7 @@ def chebyshev_polynomials_test(adj, k):
 
 
 def meshto32klabel(meshlabel, hemisphere, trans=True):
-    file = '/n04dat01/atlas_group/lma/populationGCN/BAI_Net/Brainnetome/fsaverage.{}.BN_Atlas.32k_fs_LR.label.gii'.format(hemisphere)
+    file = './Brainnetome/fsaverage.{}.BN_Atlas.32k_fs_LR.label.gii'.format(hemisphere)
     label_model = surface.load_surf_data(file)
     label = np.zeros(len(label_model))
     if trans:
@@ -275,7 +275,7 @@ def saveGiiLabel(data, hemisphere, savepath):
     path and save_name is the saving location of gii file
     '''
     data = meshto32klabel(data, hemisphere, trans=True).astype('int32')
-    template_path = '/n04dat01/atlas_group/lma/populationGCN/BAI_Net/Brainnetome/fsaverage.{}.BN_Atlas.32k_fs_LR.label.gii'.format(hemisphere)
+    template_path = './Brainnetome/fsaverage.{}.BN_Atlas.32k_fs_LR.label.gii'.format(hemisphere)
     original_label = nib.gifti.giftiio.read(template_path)
     a = nib.gifti.gifti.GiftiDataArray(data.astype('int32'),intent='NIFTI_INTENT_LABEL')
     new_label = nib.gifti.gifti.GiftiImage( meta = original_label.meta, labeltable = original_label.labeltable)
@@ -302,14 +302,8 @@ def numpy_softmax(x):
     softmax_x = exp_x / np.sum(exp_x, axis=1, keepdims=True)
     return softmax_x 
 
-def postparcellation(label, hemi):
-    """limit label range, in case of misallignment"""
-    mask_hemi = np.load('/n14dat01/lma/envs/gcn-master/gcn/neighbor_mask_{}.npy'.format(hemi))
-    label[:, 1:] = label[:, 1:]*mask_hemi
-    return label
+
 
 
 if __name__ == '__main__': 
-    adj = sp.load_npz('/n14dat01/lma/data/HCPwork/395958/surf/adj_matrix_seed_L.npz').tocsr()
-    # adj = sp.load_npz('/n14dat01/lma/script/individual-master/individual_surf_pipeline/GCN_model/adj_matrix_seed_L.npz')
-    supports = chebyshev_polynomials(adj, 5)
+    print('hello')
