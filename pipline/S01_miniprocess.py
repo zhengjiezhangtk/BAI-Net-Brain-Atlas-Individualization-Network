@@ -93,14 +93,6 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    # root_dir = '/n15dat01/lma/data/MASiVar_prep/anat'
-    # for sub in os.listdir(root_dir):
-    #     sub_dir = '/n15dat01/lma/data/MASiVar_prep/anat/'+sub
-    #     for session in os.listdir(sub_dir):
-    #         print(sub,session)
-    #         savedir = '{}/{}/anat'.format(sub_dir, session)
-    #         t1 = os.path.join(savedir, os.listdir(savedir)[0])
-    #         os.system('bash /n15dat01/lma/data/MASiVar_prep/pipline/t1_preprocessing.sh {} {}'.format(t1, savedir))
-    
-    # miniprocess_T1(args.subdir, args)
-    # miniprocess_DTI(args.subdir, args)
+
+    miniprocess_T1(args.subdir, args)
+    miniprocess_DTI(args.subdir, args)
