@@ -117,38 +117,12 @@ def main( SubjectID, SubjectDir, SurfaceDir, SavePath ):
 
 if __name__ == "__main__":
     
-    # setting parameters
-    # ap = argparse.ArgumentParser()
-    # ap.add_argument("--s", required=True, type=str, metavar="SujectID")
-    # ap.add_argument("--sub_dir", required=True, type=float, metavar="SubjectDir")
-    # ap.add_argument("--surface_dir", required=True, type=float, metavar="SurfaceDir")
-    # ap.add_argument("--save_path", required=True, type=str, default='', metavar="save_path")
-    # args = vars(ap.parse_args())
+    setting parameters
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--s", required=True, type=str, metavar="SujectID")
+    ap.add_argument("--sub_dir", required=True, type=float, metavar="SubjectDir")
+    ap.add_argument("--surface_dir", required=True, type=float, metavar="SurfaceDir")
+    ap.add_argument("--save_path", required=True, type=str, default='', metavar="save_path")
+    args = vars(ap.parse_args())
 
-    # main(SubjectID=args['s'], SubjectDir=args['sub_dir'], SurfaceDIR=args['surface_dir'], SavePath= args['save_path'])
-    
-    # for SubjectID in ['ses-021','ses-045-2','ses-072']:
-    #     SubjectDir = '/DATA/231/lma/data/SIMON/{}'.format(SubjectID)
-    #     SurfaceDir = '/DATA/231/lma/data/SIMON/{}/{}/fsaverage_LR32k'.format(SubjectID, SubjectID)
-    #     save_path = '/DATA/231/lma/data/SIMON/{}/3D/atlas_T1_L.nii.gz'.format(SubjectID)
-    #     main(SubjectID, SubjectDir, SurfaceDir, save_path)
-
-    # for SubjectID in ['200109', '204521', '105923']:
-    #     for mode in ['test', 'retest']:
-    #         SubjectDir = '/DATA/232/lma/data/HCP_{}/{}'.format(mode, SubjectID)
-    #         os.system('cp /DATA/232/lma/data/HCPwork/tf_fiber_R/{}_{}.indi.R.label.gii {}/{}.indi.R.label.gii'.format(mode, SubjectID, SubjectDir, SubjectID))
-            
-    #         SurfaceDir = '/DATA/232/lma/data/HCP_{}/{}/surf'.format(mode, SubjectID)
-    #         save_path = '/DATA/232/lma/data/HCP_{}/{}/3D/atlas_T1_R.nii.gz'.format( mode, SubjectID)
-    #         main(SubjectID, SubjectDir, SurfaceDir, save_path)
-
-    SubjectDir = '/DATA/232/lma/data/HCPwork/788876'
-    SubjectID = '788876'
-    os.system('cp /DATA/232/lma/data/HCPwork/random_R_K_5/{}.R.label.gii {}/{}.indi.R.label.gii'.format( SubjectID, SubjectDir, SubjectID))
-    os.system('cp /DATA/232/lma/data/HCPwork/random_L_K_5/{}.L.label.gii {}/{}.indi.L.label.gii'.format( SubjectID, SubjectDir, SubjectID))
-    # data = surface.load_surf_data('/DATA/232/lma/data/HCPwork/994273/994273.indi.R.label.gii')
-    # print(data.max())
-    
-    SurfaceDir = '/DATA/232/lma/data/HCPwork/788876/surf'
-    save_path = '/DATA/232/lma/data/HCPwork/788876/surf/Atlas.nii.gz'
-    main(SubjectID, SubjectDir, SurfaceDir, save_path)
+    main(SubjectID=args['s'], SubjectDir=args['sub_dir'], SurfaceDIR=args['surface_dir'], SavePath= args['save_path'])
