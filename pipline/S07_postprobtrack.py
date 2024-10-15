@@ -212,40 +212,4 @@ if __name__ == "__main__":
     parser.add_argument('-c','--cuda', type=str, default='', help='the dictionary for the transition and final result' )
     parser.add_argument('-p','--patch', type=str, default='', help='the dictionary for the transition and final result' )
     
-    # args = parser.parse_args()
-    # cudanum = args.cuda
-    # patchnum = int(args.patch)
-    # with open('/n04dat01/atlas_group/lma/MASiVar_prep/patch_adult_all.txt') as f:
-    #     pathlist = [ line.strip() for line in f.readlines()]
 
-    # for path in pathlist:
-    #     word = path.strip().split('/')
-    #     sub = word[-3]
-    #     session = word[-2]
-    #     aq = word[-1]
-    #     subID = sub+'-'+session+'-'+aq
-    #     for hemi in ['L','R']:
-    #         print(path, hemi)
-    #         output_file = '{}/{}_{}_probtrackx_omatrix2'.format(path, subID, hemi)
-    #         if not os.path.exists(output_file+'/fdt_matrix2.dot'):
-    #             print('dot not exist')
-    #             continue
-    #         if not os.path.exists(output_file+'/fdt_matrix2.npz'):
-    #             # os.system('bash /n04dat01/atlas_group/lma/MASiVar_prep/pipline/probtrack_hemi_gpu.sh {} {} {} {} {} {}'.format(path, t1file, bedpostdir, hemi, output_file, cudanum))
-    #             fdt_file = Path('{}/fdt_matrix2.dot'.format(output_file))
-    #             compress_sparse(fdt_file)
-    #             get_fiber_fingerprint(path, subID, hemi, True)
-
-    # recreation = False
-    # Card = '1'
-    # with open('/DATA/232/lma/data/HCP_test/sub_list_new.txt') as f:
-    #     namelist = [ line.strip() for line in f.readlines()]
-    # for workpath, datapath in zip(['/DATA/232/lma/data/HCP_test','DATA/232/lma/data/HCP_retest'],['/DATA/data2/HCP_S1200_Test','/DATA/data2/HCP_Retest']):
-    #     atlaspath = '/DATA/232/lma/script/individual-master/individual_surf_pipeline/Brainnetome/'
-    #     for hemi in ['L','R']:
-    #         for sub in namelist:
-    #             os.system('cp {}/{}/T1w/Diffusion/bvals {}/{}/DTI/bvals'.format(datapath, sub, workpath, sub))
-    #             os.system('cp {}/{}/T1w/Diffusion/bvecs {}/{}/DTI/bvecs'.format(datapath, sub, workpath, sub))
-    #             n = os.system('bash FiberSeg_gpu.sh {} {} {}'.format(datapath, workpath, sub, Card))
-    #             n = os.system('bash pre_probtrack.sh {} {} {} {}'.format(datapath, workpath, sub, atlaspath))
-    #             get_fiber_fingerprint(workpath, sub, hemi, recreation)
