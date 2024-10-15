@@ -41,7 +41,7 @@ if __name__ == '__main__':
     
     parser = argparse.ArgumentParser()
     # parser.add_argument('--no-cuda', action='store_true', default=False, help='Disables CUDA training.')default='None',required=True
-    parser.add_argument('-s','--subdir', type=str, default='/n20dat01/wyshi1/IndividualBN/NC_05_0071/', help='the dictionary for the transition and final result' )
+    parser.add_argument('-s','--subdir', type=str, default='', help='the dictionary for the transition and final result' )
     parser.add_argument('--dti_fa', type=str, default='', help='FA Value Derived from dtifit in FSL')
     parser.add_argument('--xfms', type=str,  default='', help='transfer matrix from T1 space to DTI space eg. T1_1mm_2_DTI.mat')
     parser.add_argument('--ANTSreg', dest='ANTSreg', action='store_true', help='if using ANTS to registration')
