@@ -10,7 +10,7 @@ echo $WD
 echo $sub
 
 
-softwaredir=/n15dat01/lma/env_new/individual_surf_pipeline
+softwaredir=./BAI_Net
 CARET7DIR=/share/soft/workbench/bin_rh_linux64
 SUBJECT_DIR=${WD}/${sub}
 AtlasSpaceFolder="MNINonLinear"  #"MNINonLinear"
@@ -29,8 +29,6 @@ InflateExtraScale=1
 SurfaceAtlasDIR=$softwaredir/pipline/standard_mesh_atlases
 GrayordinatesSpaceDIR=$softwaredir/pipline/91282_Greyordinates
 RegName="" # MSMSulc
-
-#source /DATA/233/hli/software/Pipelines/Examples/Scripts/SetUpHCPPipeline.sh
 
 if [ ! -d $AtlasSpaceFolder ]; then
   mkdir $AtlasSpaceFolder
