@@ -199,41 +199,5 @@ if __name__ == '__main__':
     subdir = Path(args.subdir)
     print('surface',subdir)
     produce_weighted_adj_matrix(subdir, recreation=False, args=None)
-    # workdir = '/n04dat01/atlas_group/lma/HCP_S1200_individual_MSM_atlas'
-    # with open(workdir+'/analysis/sublist_motion_remove.txt', 'r') as f:
-    #     sublist = [line.strip() for line in f.readlines()]
-        
-    # for i, sub in enumerate(sublist[::-1]):
-    #     print(i, sub)
-    #     # sub = '139637'
-    #     try:
-    #         subdir = '{}/{}'.format(workdir, sub)
-    #         produce_weighted_adj_matrix(subdir, recreation=False, args=None)
-    #     except:
-    #         print(i, sub, 'error')
-    # tran_asc('/n04dat01/atlas_group/lma/DP_MDD_d/ataset/NC_05_0252')
-    # produce_32k_surface(args.subdir, args.recreation, args)
-    # with open('/DATA/232/lma/data/HCPwork/sub_list.txt', 'r') as f:
-    #     subdir_list = ['/DATA/232/lma/data/HCPwork/'+str(name).strip() for name in f.readlines()]
-    # for subdir in subdir_list[::-1]:
-    #     produce_adj_matrix(subdir, True)
-
-
-    # patchfile = '/n15dat01/lma/data/MASiVar_prep/anat/patch_adult_all.txt'
-    # with open(patchfile,'r') as f:
-    #     namelist =  [  line.strip() for line in f.readlines()]
-
-    # sessiondir = namelist[int(args.subdir)]
-    # sinput = sessiondir+'/anat/T1_1mm.nii.gz'
-    # sub = sessiondir.split('/')[-2] + '-' + sessiondir.split('/')[-1] 
-    # multipr = 4 
-    # subdir = Path(sessiondir)
-    # session = Path(sessiondir).name
-    # # if not os.path.exists(subdir):
-    # #     os.mkdir(subdir)
-    # if not os.path.exists('{}/{}/label/rh.entorhinal_exvivo.1abel'.format(str(subdir),sub)):
-    #     os.system('rm -r {}/{}/'.format(str(subdir), sub)) 
-    #     os.system('recon-all -i {} -subjid {} -sd {} -all -openmp {}'.format(sinput, sub, str(subdir), multipr))
     
-    # os.system('bash /n15dat01/lma/data/MASiVar_prep/pipline/FS2WB.sh {} {} {}'.format(str(subdir.parent), session, sub))
             
