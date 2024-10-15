@@ -13,7 +13,7 @@ Then the BAI-Net method trains a Chebyshev graph neural network to achieve the r
 The pipeline use the fiber connection fingerprint derived from group brainnetome atlas to parcellate the individual cerebral cortex. This pipline is trained on the 32kLR surface, could also be applied into other HCP-styled surface (.surf.gii). Currently, The BAI-Net support both tensorflow and pytorch packages to inference individual brain networks or parcellation. Suppoted brain network includes Yeo's 7 networks, 17 networks. Supported brain parcellation on surface includes: Brainnetome Atlas, HCP-parcellation.
 ![Fiber-density framework](figure1.png)
 
-The parcellation result shows high reproducibility within the same subjects, high inter-subject specifity, high robustness across multi-scanner image, and enable for local parcellation to reach high similarity with whole-brain parcellation.
+The parcellation result shows high reproducibility within the same subjects, high inter-subject specifity, high robustness across multi-scanner image, and is enable to parcellate brain locally but maintains high similarity with whole-brain parcellation.
 ![High reproducibility](figure2.png)
 
 ## Requirement
