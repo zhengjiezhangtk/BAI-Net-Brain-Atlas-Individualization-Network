@@ -3,8 +3,11 @@
 by: Ma Liang at 2020/4/30
 
 ## Introduction
-The pipeline use the fiber connection fingerprint derived from group brainnetome atlas to parcellate the individual cerebral cortex. This pipline is working on the brain cortex surface not the itself image directly, the final result is also on surface. Later based on this pipline, a version of individual parcellation on image might be producted later.
+The pipeline use the fiber connection fingerprint derived from group brainnetome atlas to parcellate the individual cerebral cortex. This pipline is trained on the 32kLR surface, could also be applied into other HCP-styled surface (.surf.gii).
 ![Fiber-density framework](figure1.png)
+
+
+![High reproducibility](figure2.png)
 
 ## Requirement
 ```
@@ -186,10 +189,10 @@ done
 As mentioned above, we provide the flexible of data structure, so some data path and condition must be provided.
 --softwaredir: the folder of this pipeline. (must be provided)
 -s/--subdir: the data folder for a sub, normally under the workdir, (etc $workdir/$sub) (must be provided)
---begin_step and --end_step : from begin number to end_number of step in pipeline
 --t1: t1w filepath, (must be provided)
---t1_preprocessed: if the T1 is in 1mm, preprocessed for producing the relavent surface using Freesurfer software'), default false.
 --dti --bval and --bvec : the filepath of Diffusion MRI data, corresponding b values and corresponding b vectors (must be provided)
+--begin_step and --end_step : from begin number to end_number of step in pipeline
+--t1_preprocessed: if the T1 is in 1mm, preprocessed for producing the relavent surface using Freesurfer software'), default false.
 --dti_preprocessed: if the DTI is preprocessed, default false)
 --nodif_brain_mask: the brain mask in diffusion MRI. If you set dti_preprocessed True, this term is required.
 --dti_fa: FA Value of diffusion MRI.
@@ -203,8 +206,9 @@ As mentioned above, we provide the flexible of data structure, so some data path
 --tract_MNIspace : for the non-HCP dataset, it is suggested to be True
 --card1: First Cuda Card Number
 --card2: Second Cuda Card Number, whcih also can be absent with 'None'
+--atlas : the group priors used for individual
 ```
 
-## pubilication
-L. Ma et al., "BAI-Net: Individualized Anatomical Cerebral Cartography Using Graph Neural Network," in IEEE Transactions on Neural Networks and Learning Systems, doi: 10.1109/TNNLS.2022.3213581.
+## Publications
+L. Ma et al., "BAI-Net: Individualized Anatomical Cerebral Cartography Using Graph Neural Network," in IEEE Transactions on Neural Networks and Learning Systems, vol. 35, no. 6, pp. 7446-7457, June 2024, doi: 10.1109/TNNLS.2022.3213581.
 
