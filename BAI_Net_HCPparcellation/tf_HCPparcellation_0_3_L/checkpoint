@@ -1,2 +1,0 @@
-model_checkpoint_path: "/n04dat01/atlas_group/lma/populationGCN/BAI_Net/BAI_Net_HCPparcellation/tf_HCPparcellation_0_3_L/tf_0_3_L.ckpt"
-all_model_checkpoint_paths: "/n04dat01/atlas_group/lma/populationGCN/BAI_Net/BAI_Net_HCPparcellation/tf_HCPparcellation_0_3_L/tf_0_3_L.ckpt"
