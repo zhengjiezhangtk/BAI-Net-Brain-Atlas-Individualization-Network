@@ -1,2 +1,0 @@
-model_checkpoint_path: "/n04dat01/atlas_group/lma/populationGCN/BAI_Net/glasser_360/tf_glasser_0_3_R/glasser_model_0_3_R.ckpt"
-all_model_checkpoint_paths: "/n04dat01/atlas_group/lma/populationGCN/BAI_Net/glasser_360/tf_glasser_0_3_R/glasser_model_0_3_R.ckpt"
