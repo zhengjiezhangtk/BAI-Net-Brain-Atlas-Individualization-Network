@@ -43,14 +43,14 @@ Before implementation, you should revise the software path on the pipline/soft_p
 
 the pipline contain 8 steps, corresponding to the file begin with 'S'. Each step file can be run sepretely aftering running the previous steps. The time cost of pipline is around 12 hours for two GPUs to work. 
 ```
-S01_miniprocess.py           ( CPU only)
-S02_registration.py          ( CPU only)
-S03_build_surface.py         ( CPU only, long time-consumption ) 
+S01_miniprocess.py           ( CPU )
+S02_registration.py          ( CPU )
+S03_build_surface.py         ( CPU, long time-consumption ) 
 S04_fiber_orientation.py     ( GPU )
-S05_fiber_tract.py           ( CPU/GPU)
-S06_probtrack.py             ( GPU required)
-S07_postprobtrack.py         ( CPU only)
-S08 in folder ../GCN_model   ( CPU/GPU )
+S05_fiber_tract.py           ( CPU or GPU)
+S06_probtrack.py             ( GPU)
+S07_postprobtrack.py         ( CPU )
+S08 in folder ../GCN_model   ( CPU or GPU )
 ```
 It is suggested that run the pipline of **'parcellation.py'** in the pipeline folder that has been parllatally structured. The file path of pipeline is record in **'{sub_name}_config.ini'** for the checking, and it will update every steps. The final parcellation result is  {sub_name}.indi.R.label.gii and {sub_name}.indi.R.label.gii 
 
