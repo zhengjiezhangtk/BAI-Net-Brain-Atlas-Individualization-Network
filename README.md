@@ -57,6 +57,9 @@ It is suggested that run the pipline of **'parcellation.py'** in the pipeline fo
 ## Some Examples of Running Pipline:
 we also includes some run_scripts and results in the example/ folder.
 
+## docker
+docker pull zhengjiezhangtk/bainet-centos7:v2
+
 ## Publications
 L. Ma et al., "BAI-Net: Individualized Anatomical Cerebral Cartography Using Graph Neural Network," in IEEE Transactions on Neural Networks and Learning Systems, vol. 35, no. 6, pp. 7446-7457, June 2024, doi: 10.1109/TNNLS.2022.3213581.
 
