@@ -59,6 +59,13 @@ we also includes some run_scripts and results in the example/ folder.
 
 ## docker
 docker pull zhengjiezhangtk/bainet-centos7:v2
+（
+docker load -i bainet-centos7-v2.tar
+docker run -it bainet-centos7 /bin/bash
+（docker run -it -v ~/BAInet:/mnt/host:ro bainet-centos7:v2 /bin/bash）把本地目录挂上去
+docker commit b66a701c223d bainet-centos7:v2
+docker save -o bainet-centos7-v2.tar bainet-centos7:v2
+）
 
 ## Publications
 L. Ma et al., "BAI-Net: Individualized Anatomical Cerebral Cartography Using Graph Neural Network," in IEEE Transactions on Neural Networks and Learning Systems, vol. 35, no. 6, pp. 7446-7457, June 2024, doi: 10.1109/TNNLS.2022.3213581.
