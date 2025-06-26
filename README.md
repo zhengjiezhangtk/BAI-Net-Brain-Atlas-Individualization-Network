@@ -62,7 +62,7 @@ docker pull zhengjiezhangtk/bainet-centos7:v2
 （
 docker load -i bainet-centos7-v2.tar
 docker run -it bainet-centos7 /bin/bash
-（docker run -it -v ~/BAInet:/mnt/host:ro bainet-centos7:v2 /bin/bash）把本地目录挂上去
+（docker run -it -v ~/BAInet:/mnt/host:ro bainet-centos7:v2 /bin/bash）
 docker commit b66a701c223d bainet-centos7:v2
 docker save -o bainet-centos7-v2.tar bainet-centos7:v2
 ）
