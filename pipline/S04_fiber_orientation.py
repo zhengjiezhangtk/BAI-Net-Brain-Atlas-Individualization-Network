@@ -44,6 +44,6 @@ if __name__ == '__main__':
     # parser.add_argument('--no-cuda', action='store_true', default=False, help='Disables CUDA training.')default='None',required=True
     parser.add_argument('-s', '--subdir', type=str, default='', help='the dictionary for the transition and final result' )
     parser.add_argument('--bedpost_dir', type=str, default='', help='Bedpost Result Dictionary')
-
+    parser.add_argument('--card1', type=str, default='0', help='CUDA device to use')
     args = parser.parse_args()
     bedpost_estimate(args.subdir, True, args)

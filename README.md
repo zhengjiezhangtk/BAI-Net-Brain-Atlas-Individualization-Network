@@ -67,6 +67,29 @@ docker commit b66a701c223d bainet-centos7:v2
 docker save -o bainet-centos7-v2.tar bainet-centos7:v2
 ）
 
+## detail of the pipline
+S01_miniprocess.py: first step. You should make sure subdir/3D & subdir/DTI are existed.(mkdir -p subdir/3D subdir/DTI)
+
+python S01_miniprocess.py -s /mnt/host/result \
+     --t1 /mnt/host/HCP_data/HCP_Retest/103818/MNINonLinear/T1w.nii.gz \
+     --dti /mnt/host/HCP_data/HCP_Retest/103818/T1w/Diffusion/data.nii.gz \
+     --bval /mnt/host/HCP_data/HCP_Retest/103818/T1w/Diffusion/bvals \
+     --bvec /mnt/host/HCP_data/HCP_Retest/103818/T1w/Diffusion/bvecs \
+     --dti_preprocessed 1 \
+     --nodif_brain_mask /mnt/host/HCP_data/HCP_Retest/103818/T1w/Diffusion/nodif_brain_mask.nii.gz
+
+S02_registration.py: second step. You should make sure subdir/xfms is existed.
+python S02_registration.py -s /mnt/host/result \
+
+S03_build_surface.py: third step. You should make sure subdir/fsaverage_LR32k & subdir/surf is existed.
+and less the L.atlasroi.label.gii.
+python S03_build_surface.py -s /mnt/host/result --fsaverage_LR32k /mnt/host/HCP_data/HCP_Retest/103818/MNINonLinear/fsaverage_LR32k --surface_begin_name 103818
+
+S04_build_atlas.py: fourth step. 
+python S04_build_atlas.py -s /mnt/host/result 
+
+
+
 ## Publications
 L. Ma et al., "BAI-Net: Individualized Anatomical Cerebral Cartography Using Graph Neural Network," in IEEE Transactions on Neural Networks and Learning Systems, vol. 35, no. 6, pp. 7446-7457, June 2024, doi: 10.1109/TNNLS.2022.3213581.
 
