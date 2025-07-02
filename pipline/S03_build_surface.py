@@ -187,6 +187,7 @@ if __name__ == '__main__':
     parser.add_argument('--fsaverage_LR32k', type=str, default='', help='Freesurfer Result Dictionary')
     parser.add_argument('--surface_begin_name', type=str, default='', help='Surface begin name in Freesurfer Result Dictionary, if fsaverage_LR32k provided, this terms is required')
     parser.add_argument('--recreation', type=bool, default=False, help='Freesurfer Result Dictionary')
+    parser.add_argument('--ANTSreg', action='store_true', help='Enable ANTS registration')
     args = parser.parse_args()
 
     subdir = Path(args.subdir)

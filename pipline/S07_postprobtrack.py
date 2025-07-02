@@ -10,31 +10,174 @@ import argparse
 from sklearn.preprocessing import normalize
 
 
+# def read_coomat(file):
+#     with open(str(file), 'r') as f:
+#         mat = [line.rstrip().split('  ') for line in f]
+#     print('finish loading')
+#     i = [int(l[0])-1 for l in mat]
+#     j = [int(l[1])-1 for l in mat]
+#     v = [int(l[2]) for l in mat]
+#     print('i,j,v got')
+#     return i, j, v
 def read_coomat(file):
+    """read file low mem"""
+    print(f"Reading coo matrix from: {file}")
+    i_list, j_list, v_list = [], [], []
     with open(str(file), 'r') as f:
-        mat = [line.rstrip().split('  ') for line in f]
-    print('finish loading')
-    i = [int(l[0])-1 for l in mat]
-    j = [int(l[1])-1 for l in mat]
-    v = [int(l[2]) for l in mat]
-    print('i,j,v got')
-    return i, j, v
+        for line in f:
+            if line.strip():
+                try:
+                    i_str, j_str, v_str = line.strip().split('  ')
+                    i_list.append(int(i_str) - 1)
+                    j_list.append(int(j_str) - 1)
+                    v_list.append(int(v_str))
+                except ValueError:
+                    print(f"Invaild line: {line.strip()}")
+    print('Finished loading dot file')
+    return i_list, j_list, v_list
 
+# def compress_sparse(file):
+#     sub = str(file).split('/')[-2].split('_')[0]
+#     if file.exists():
+#         if  not (file.parent/'fdt_matrix2.npz').exists():
+#             # print(f'convert fdt matrix for {sub}')
+#             i, j, v = read_coomat(file)
+#             coo_mat = sparse.csr_matrix((v, (i,j)))
+#             assert coo_mat.shape == (i[-1]+1, j[-1]+1)
+#             sparse.save_npz(str(file.parent/'fdt_matrix2'), coo_mat)
+#         print(f'remove {str(file)}')
+#         os.remove(str(file))
+#         return sub+' is finished'
+#     else:
+#         return sub + ' is already done'
+def compress_sparse(file, chunk_size=1000000):
 
-def compress_sparse(file):
+    from scipy.sparse import vstack
+
     sub = str(file).split('/')[-2].split('_')[0]
-    if file.exists():
-        if  ~(file.parent/'fdt_matrix2.npz').exists():
-            # print(f'convert fdt matrix for {sub}')
-            i, j, v = read_coomat(file)
-            coo_mat = sparse.csr_matrix((v, (i,j)))
-            assert coo_mat.shape == (i[-1]+1, j[-1]+1)
-            sparse.save_npz(str(file.parent/'fdt_matrix2'), coo_mat)
-        print(f'remove {str(file)}')
-        os.remove(str(file))
-        return sub+' is finished'
-    else:
+
+    if not file.exists():
+
         return sub + ' is already done'
+
+
+
+    output_npz = file.parent / 'fdt_matrix2.npz'
+
+    if output_npz.exists():
+
+        return sub + ' already converted'
+
+
+
+    print(f"[Pass 1] Scanning shape from {file}")
+
+    max_i, max_j = 0, 0
+
+    with open(str(file), 'r') as f:
+
+        for line in f:
+
+            if line.strip():
+
+                try:
+
+                    i_str, j_str, v_str = line.strip().split('  ')
+
+                    i = int(i_str) - 1
+
+                    j = int(j_str) - 1
+
+                    max_i = max(max_i, i)
+
+                    max_j = max(max_j, j)
+
+                except ValueError:
+
+                    continue
+
+    shape = (max_i + 1, max_j + 1)
+
+    print(f"  -> Max shape: {shape}")
+
+
+
+    # 第二遍构建矩阵
+
+    print("[Pass 2] Reading and chunking...")
+
+    i_list, j_list, v_list = [], [], []
+
+    chunk_matrices = []
+
+    with open(str(file), 'r') as f:
+
+        for line_num, line in enumerate(f, 1):
+
+            if line.strip():
+
+                try:
+
+                    i_str, j_str, v_str = line.strip().split('  ')
+
+                    i = int(i_str) - 1
+
+                    j = int(j_str) - 1
+
+                    v = int(v_str)
+
+                    i_list.append(i)
+
+                    j_list.append(j)
+
+                    v_list.append(v)
+
+                except ValueError:
+
+                    continue
+
+
+
+                if len(i_list) >= chunk_size:
+
+                    print(f"  Writing chunk ending at line {line_num}")
+
+                    chunk = sparse.csr_matrix((v_list, (i_list, j_list)), shape=shape)
+
+                    chunk_matrices.append(chunk)
+
+                    i_list, j_list, v_list = [], [], []
+
+
+
+    if i_list:
+
+        print(f"  Writing final chunk with {len(i_list)} entries")
+
+        chunk = sparse.csr_matrix((v_list, (i_list, j_list)), shape=shape)
+
+        chunk_matrices.append(chunk)
+
+
+
+    print("Stacking all chunks with consistent shape...")
+
+    final_mat = chunk_matrices[0]
+
+    for cm in chunk_matrices[1:]:
+
+        final_mat += cm  # shape now always same
+
+
+
+    print("Saving sparse matrix to", output_npz)
+
+    sparse.save_npz(str(output_npz), final_mat)
+
+    os.remove(str(file))
+
+    return sub + ' is finished'
+
 
 
 def PostProbtrack(work_dir,sub,hemi):
@@ -108,7 +251,7 @@ def normal(fp,roi_size):
 
 def fiber2target(target_coords, fiber, sub):
     labels = []
-    img = nib.load(str(fiber)).get_data()
+    img = nib.load(str(fiber)).get_fdata()
     roi_size = np.array([img[:,:,:,i].sum() for i in range(72)])
     print('min fiber size: ', min(roi_size),'max fiber size: ', max(roi_size))
     mat = []
@@ -136,10 +279,10 @@ def shape_fit(fiber_img, mask_img):
 
 
 def fiber2target2(no_diff_path, fiber, sub):
-    fiber_img = nib.load(str(fiber)).get_data()
+    fiber_img = nib.load(str(fiber)).get_fdata()
     roi_size = np.array([fiber_img[:,:,:,i].sum() for i in range(72)])
     print('min fiber size: ', min(roi_size), 'max fiber size: ', max(roi_size))
-    mask_img = nib.load(str(no_diff_path)).get_data()
+    mask_img = nib.load(str(no_diff_path)).get_fdata()
     z,y,x = np.nonzero(mask_img.T)
     if (fiber_img.shape)[:3] != mask_img.shape:
         # print(fiber_img.shape, mask_img.shape)
@@ -165,9 +308,31 @@ def get_fiber_fingerprint(workpath, sub, hemi, recreation):
         # mat, roi_size = fiber2target(target_coords, fiber, sub)
         mat, roi_size = fiber2target2(no_diff_path, fiber, sub)
         assert (mat.shape == (n_targets, 72)), f'shape: {mat.shape}, got wrong fingerprint with {n_targets, 72}'
-        fp = getFingerPrint(sps_mat, mat)
-        fp = normal(fp, roi_size)
-        sparse.save_npz(str(fdt_path/target_file), fp)
+
+        ##
+        print('computing fingerprint in chunks...')
+        chunk_size = 1000
+        fp_path = str(fdt_path / target_file)
+        first_chunk = True
+
+        for i in range(0, n_seeds, chunk_size):
+            end = min(i + chunk_size, n_seeds)
+            print(f' chunk {i}-{end}')
+            chunk_fp = sps_mat[i:end].dot(mat)
+            chunk_fp = normal(chunk_fp, roi_size)
+
+            if first_chunk:
+                sparse.save_npz(fp_path, chunk_fp)
+                first_chunk = False
+            else:
+                tmp = sparse.load_npz(fp_path)
+                tmp = sparse.vstack([tmp, chunk_fp])
+                sparse.save_npz(fp_path, tmp)
+        ##
+        # fp = getFingerPrint(sps_mat, mat)
+        # print('normalizing by fiber size...')
+        # fp = normal(fp, roi_size)
+        # sparse.save_npz(str(fdt_path/target_file), fp)
     else:
         print("sparse matrix not exists or finger print already exists ",file)
     return None

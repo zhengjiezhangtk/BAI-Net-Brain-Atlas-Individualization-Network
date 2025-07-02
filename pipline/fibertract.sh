@@ -29,9 +29,14 @@ if [ $MNI = "False" ] ; then
 elif [ $MNI = "True" ] ; then
   echo  'MNI' $MNI 
   if [ ! -f $subdir/tractseg_output/bundle_segmentations.nii.gz ];then
+
+    rm -rf $subdir/tractseg_output
+    mkdir -p $subdir/tractseg_output
+
     TractSeg -i $dti -o $subdir/tractseg_output/ \
     --bvals $bval --bvecs $bvec --brain_mask $mask\
     --raw_diffusion_input --preprocess --single_output_file
+    
     echo 'mask registration'
     #rm $subdir/tractseg_output/Diffusion_MNI.nii.gz
     #flirt -ref $subdir/DTI/dti_FA.nii.gz -in $subdir/tractseg_output/FA_MNI.nii.gz -omat $subdir/xfms/MNI_2_DTI.mat

@@ -31,19 +31,19 @@ if [ ! -f $output_file/fdt_matrix2.dot ] && [ ! -f $output_file/fdt_matrix2.npz 
     #     --omatrix2  --target2=$subdir/DTI/LowResMask   --wtstop=$subdir/surf/wtstop\
     #     --dir=$output_file --opd -o ${Hemisphere}
     # elif [ $ANTS == True ] ; then
-        seeds=white_DTI_${Hemisphere}.asc 
+        seeds=white.${Hemisphere}.asc 
         seedref=$subdir/DTI/dti_FA.nii.gz
         echo 'ants_mode'
         echo $seedref
         echo $subdir/surf/${seeds}
         probtrackx2_gpu --samples=$bedpost_dir/merged \
         --mask=$bedpost_dir/nodif_brain_mask \
-        --xfm=/n04dat01/atlas_group/lma/DP_MDD_dataset/pipline/eye.mat \
+        --xfm=/mnt/host/BAI-Net-Brain-Atlas-Individualization-Network-master/pipline/eye.mat \
         --seedref=$seedref \
         -P 5000 --loopcheck --forcedir -c 0.2 --sampvox=2 --randfib=1 \
-        --stop=$subdir/surf/stop_ants --forcefirststep  \
+        --stop=$subdir/surf/stop --forcefirststep  \
         -x $subdir/surf/${seeds} \
-        --omatrix2  --target2=$subdir/DTI/LowResMask  --wtstop=$subdir/surf/wtstop_ants \
+        --omatrix2  --target2=$subdir/DTI/LowResMask  --wtstop=$subdir/surf/wtstop \
         --dir=$output_file --opd -o ${Hemisphere} 
     # else 
     #     echo 'error in probtracking'  

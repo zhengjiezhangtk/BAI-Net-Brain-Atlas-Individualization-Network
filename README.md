@@ -68,9 +68,9 @@ docker save -o bainet-centos7-v2.tar bainet-centos7:v2
 ）
 
 ## detail of the pipline
+```
 S01_miniprocess.py: first step. You should make sure subdir/3D & subdir/DTI are existed.(mkdir -p subdir/3D subdir/DTI)
-
-python S01_miniprocess.py -s /mnt/host/result \
+python S01_miniprocess.py -s /mnt/host/result1 \
      --t1 /mnt/host/HCP_data/HCP_Retest/103818/MNINonLinear/T1w.nii.gz \
      --dti /mnt/host/HCP_data/HCP_Retest/103818/T1w/Diffusion/data.nii.gz \
      --bval /mnt/host/HCP_data/HCP_Retest/103818/T1w/Diffusion/bvals \
@@ -79,14 +79,30 @@ python S01_miniprocess.py -s /mnt/host/result \
      --nodif_brain_mask /mnt/host/HCP_data/HCP_Retest/103818/T1w/Diffusion/nodif_brain_mask.nii.gz
 
 S02_registration.py: second step. You should make sure subdir/xfms is existed.
-python S02_registration.py -s /mnt/host/result \
+python S02_registration.py -s /mnt/host/result1 \
 
 S03_build_surface.py: third step. You should make sure subdir/fsaverage_LR32k & subdir/surf is existed.
 and less the L.atlasroi.label.gii.
-python S03_build_surface.py -s /mnt/host/result --fsaverage_LR32k /mnt/host/HCP_data/HCP_Retest/103818/MNINonLinear/fsaverage_LR32k --surface_begin_name 103818
+python S03_build_surface.py -s /mnt/host/result1 --fsaverage_LR32k /mnt/host/HCP_data/HCP_Retest/103818/MNINonLinear/fsaverage_LR32k --surface_begin_name 103818
 
 S04_build_atlas.py: fourth step. 
-python S04_build_atlas.py -s /mnt/host/result 
+python S04_fiber_orientation.py -s /mnt/host/result1
+for bedpostx
+
+S05_fiber_tract.py: fifth step. 
+python S05_fiber_tract.py -s /mnt/host/result1
+make sure you have tract_pretrain_parm in /root/.tract And change the soft_path.sh
+
+S06_probtrack.py: sixth step. 
+python S06_probtrack.py -s /mnt/host/result1
+
+S07_postprobtrack.py: seventh step.
+python S07_postprobtrack.py -s /mnt/host/result1 -p L
+Because I run this code in my local computer. the computer's cpu is lower than sever. So I changed the method to read martrixs.
+
+S08_parcellation.py: eighth step.
+python S08_gcn_inference.py -s /mnt/host/result1 --savepath /mnt/host/result1/output_result
+```
 
 
 

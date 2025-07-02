@@ -1,18 +1,18 @@
 #!/bin/bash
 # the root directory for BAI_Net pipline
-softwaredir=D:/Code_collect/BAI_Net_new/BAI_Net
+softwaredir=/mnt/host/BAI-Net-Brain-Atlas-Individualization-Network-master
 
-FSLDIR=/share/soft/fsl-6.0.4
+FSLDIR=/opt/fsl/bin/fsl
 
-ANTSDIR=/share/soft/ants
+ANTSDIR=/opt/ants-2.5.2/bin
 
-FREESURFER_HOME=/share/soft/freesurfer6.0
+FREESURFER_HOME=/opt/freesurfer
 
-MRTRIX3=/share/soft/mrtrix3
+MRTRIX3=/opt/conda/envs/BAInetenv/bin
 
-WORKBENCH=/share/soft/workbench
+WORKBENCH=/opt/workbench
 
-ANACONDA=/share/soft/anaconda3
+ANACONDA=/opt/conda
 
 export PATH=$WORKBENCH/bin_rh_linux64:$MRTRIX3/release/bin:$MRTRIX3/scripts:$ANTSDIR:$PATH
 export PATH=$FREESURFER_HOME/tktools:$FREESURFER_HOME/fsfast/bin:$FREESURFER_HOME/mni/bin:$FSLDIR/bin:$PATH

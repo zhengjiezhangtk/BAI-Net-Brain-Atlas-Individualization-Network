@@ -30,6 +30,7 @@ if __name__ == '__main__':
     parser.add_argument('--hemi', type=str, default='L', help='TractSeg Result Dirtionary')
     parser.add_argument('--card', type=str, default='0', help='TractSeg Result Dirtionary')
     parser.add_argument('--HCP', type=bool, default=False, help='TractSeg Result Dirtionary')
+    parser.add_argument('--ANTSreg', type=bool, default=False, help='Whether to use ANTS registration')
 
     args = parser.parse_args()
     
