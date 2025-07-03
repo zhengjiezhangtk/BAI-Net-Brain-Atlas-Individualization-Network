@@ -57,17 +57,10 @@ It is suggested that run the pipline of **'parcellation.py'** in the pipeline fo
 ## Some Examples of Running Pipline:
 we also includes some run_scripts and results in the example/ folder.
 
-## docker
+## Docker
 docker pull zhengjiezhangtk/bainet-centos7:v3
 
-docker load -i bainet-centos7-v2.tar
-docker run -it bainet-centos7 /bin/bash
-（docker run -it -v ~/BAInet:/mnt/host:ro bainet-centos7:v2 /bin/bash）
-docker commit b66a701c223d bainet-centos7:v2
-docker save -o bainet-centos7-v2.tar bainet-centos7:v2
-
-
-## detail of the pipline
+## Detail of the pipline
 ```
 S01_miniprocess.py: first step. You should make sure subdir/3D & subdir/DTI are existed.(mkdir -p subdir/3D subdir/DTI)
 python S01_miniprocess.py -s /mnt/host/result1 \
